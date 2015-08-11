@@ -428,15 +428,6 @@ public class SandboxInterceptorTest {
         assertEvaluate(new StaticWhitelist("method java.lang.CharSequence charAt int"), '2', "'123'.charAt(1);");
     }
 
-    @Test public void ambiguousOverloads() {
-        // Groovy selects one of these. How, I do not know.
-        assertEvaluate(new AnnotatedWhitelist(), true, Ambiguity.class.getName() + ".m(null)");
-    }
-    public static final class Ambiguity {
-        @Whitelisted public static boolean m(String x) {return true;}
-        @Whitelisted public static boolean m(URL x) {return true;}
-    }
-
     @Test public void regexps() throws Exception {
         assertEvaluate(new GenericWhitelist(), "goodbye world", "def text = 'hello world'; def matcher = text =~ 'hello (.+)'; matcher ? \"goodbye ${matcher[0][1]}\" : 'fail'");
     }
